@@ -1,2 +1,17 @@
-<router-outlet></router-outlet>
-
+<div class="wrapper">
+   <!-- Main Header -->
+  <app-layout-header></app-layout-header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <app-layout-left-side></app-layout-left-side>
+  <!-- Content Wrapper. Contains page content -->
+  <router-outlet></router-outlet>
+  <!-- /.content-wrapper -->
+  <!-- Main Footer -->
+  <app-layout-footer></app-layout-footer>
+  <!-- Control Sidebar -->
+  <app-layout-control-sidebar></app-layout-control-sidebar>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
