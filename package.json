@@ -1,0 +1,26 @@
+{
+  "name": "moviestocker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "serverless-plugin-existing-s3": "^2.0.3"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.7.3",
+    "serverless": "^1.26.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://tamamushi@github.com/tamamushi/movietracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tamamushi/movietracker/issues"
+  },
+  "homepage": "https://github.com/tamamushi/movietracker#readme"
+}
