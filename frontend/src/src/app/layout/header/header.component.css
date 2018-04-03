@@ -1,0 +1,15 @@
+
+.logo-outlet {
+	position: relative;
+	height: 40px;
+}
+.logo-img {
+	width: 172px;
+	height: 36px;
+	background: url('/assets/img/logo.png');
+	background-size: cover;
+	background-position: center center;
+	position: absolute;
+	left:   24px;
+	bottom: 7px;
+}
