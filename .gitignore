@@ -9,6 +9,7 @@ src/environments/environment.local.ts
 src/environments/*
 !environment.ts
 !environment.prod.ts
+.python-version
 
 # dependencies
 /node_modules
