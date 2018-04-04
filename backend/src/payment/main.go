@@ -17,6 +17,11 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
+var (
+    Version  string
+    Revision string
+)
+
 type Response struct {
 	Message string `json:"message"`
 }

@@ -12,19 +12,34 @@ package:
     - ./bin/**
 
 functions:
-  list:
-    handler: bin/main
+  listProject:
+    handler: bin/project
     events:
       - http:
-          path: /api
+          path: /project
           method: get
           cors: true
 
-  get:
-    handler: bin/main
+  getProject:
+    handler: bin/project
     events:
       - http:
-          path: /api/{id}
+          path: /project/{id}
           method: get
           cors: true
 
+  listInvoice:
+    handler: bin/project
+    events:
+      - http:
+          path: /project
+          method: get
+          cors: true
+
+  getInvoice:
+    handler: bin/invoice
+    events:
+      - http:
+          path: /invoice/{id}
+          method: get
+          cors: true

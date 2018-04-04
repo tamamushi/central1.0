@@ -6,12 +6,17 @@ package main
 
 import (
 	"fmt"
-	"encoding/json"
-	"strconv"
-	"database/sql"
+	//"encoding/json"
+	//"strconv"
+	//"database/sql"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/events"
+)
+
+var (
+    Version  string
+    Revision string
 )
 
 type Response struct {
@@ -21,12 +26,12 @@ type Response struct {
 // Handler is the only one entry point.
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	
-	var id int
-	var identity string 
-	var db *sql.DB
-	var err error
+	//var id int
+	//var identity string 
+	//var db *sql.DB
+	//var err error
 
-	jsonStr := {
+	jsonStr := `{
 		"name": "日本",
 		"prefectures": [{
 			"name": "東京都",
@@ -43,7 +48,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			"capital": "横浜市",
 			"population": 9116252
 		}]
-	}
+	}`
 	return events.APIGatewayProxyResponse {Body:jsonStr, StatusCode:200}, nil
 }
 
