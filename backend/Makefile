@@ -13,7 +13,7 @@ LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(R
 build: deps bin/project bin/invoice bin/payment
 
 deploy: build
-	../node_modules/serverless/bin/serverless deploy -v
+	../node_modules/serverless/bin/serverless deploy 
 
 clean: 
 	$(GOCLEAN)
@@ -24,7 +24,7 @@ deps:
 	go get github.com/aws/aws-lambda-go/events
 	go get github.com/mattn/go-sqlite3
 
-bin/%: src/%
-	cd $< && env GOOS=linux $(GOBUILD) $(LDFLAGS) -o ../../bin/$* main.go
+bin/%: src/handler/%
+	env GOOS=linux $(GOBUILD) $(LDFLAGS) -o $@ $</main.go
 
 .PHONY: deps all

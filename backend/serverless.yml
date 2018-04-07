@@ -1,4 +1,4 @@
-service: s3db
+service: cloudS3apidb
 provider: 
   name: aws
   stage: prod
