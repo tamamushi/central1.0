@@ -10,10 +10,14 @@ REVISION := $(shell git rev-parse --short HEAD)
 
 LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
 
+deploy: deps dep/project dep/invoice dep/payment
 build: deps bin/project bin/invoice bin/payment
 
-deploy: build
-	../node_modules/serverless/bin/serverless deploy 
+dep/%: bin/%
+	../node_modules/serverless/bin/serverless deploy function -f \
+	list$(shell echo $* | awk '{ print toupper(substr($$0, 1, 1)) substr($$0, 2, length($$0) - 1) }')
+	../node_modules/serverless/bin/serverless deploy function -f \
+	get$(shell echo $* | awk '{ print toupper(substr($$0, 1, 1)) substr($$0, 2, length($$0) - 1) }')
 
 clean: 
 	$(GOCLEAN)
