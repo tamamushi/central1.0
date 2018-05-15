@@ -1,3 +1,11 @@
+<!-- vim: set ts=4 sw=4 sts=4 et sta ai fenc=utf-8: -->
+
 <p>
   project-list works!
 </p>
+<ul class="list-data" *ngFor="let project of projects; let i = index">
+    <li class="list-item">
+        <span class="">{{project.ProjectNo}}</span>
+    </li>
+</ul>
+

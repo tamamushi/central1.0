@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://tamamushi@github.com/tamamushi/movietracker.git"
+    "url": "git+https://tamamushi@github.com/tamamushi/central1.0.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tamamushi/movietracker/issues"
+    "url": "https://github.com/tamamushi/central1.0/issues"
   },
-  "homepage": "https://github.com/tamamushi/movietracker#readme"
+  "homepage": "https://github.com/tamamushi/central1.0#readme"
 }

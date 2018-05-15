@@ -1,16 +1,24 @@
+/** vim: set ts=4 sw=4 sts=4 et sta ai fenc=utf-8:
+ *
+ *  Project:    centralGrrow
+ *  Version:    1.0
+ *  Revision:   0.1
+ *
+ *  File:       app.module.ts
+ *  Date:       2018/04/30
+**/
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { Logger, Level } from 'angular2-logger/core'
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { LayoutModule } from './layout/layout.modules';
+import { LayoutModule } from './layout/layout.module';
+import { CoreModule } from './core/core.module';
+import { ProjectModule } from './project/project.module';
 
 import { TopComponent } from './top/top.component';
-
-//import { ProjectModule } from './project/project.module';
-import { ProjectComponent } from './project/project.component';
-import { ProjectListComponent } from './project/project-list/project-list.component';
-import { ProjectCreateComponent } from './project/project-create/project-create.component';
 
 //import { ChargeInvoiceModule } from './charge-invoice/charge-invoice.module';
 //import { ChargeInvoiceComponent } from './charge-invoice/charge-invoice.component';
@@ -21,10 +29,7 @@ import { ProjectCreateComponent } from './project/project-create/project-create.
 @NgModule({
   declarations: [
     AppComponent,
-    TopComponent,
-//    ProjectComponent,
-//    ProjectListComponent,
-//    ProjectCreateComponent,
+    TopComponent
 //    ChargeInvoiceComponent,
 //    PaymentInvoiceComponent,
   ],
@@ -32,11 +37,18 @@ import { ProjectCreateComponent } from './project/project-create/project-create.
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-//    ProjectModule,
+    ProjectModule,
+    CoreModule
 //    ChargeInvoiceModule,
 //    PaymentInvoiceModule
   ],
-  providers: [],
+  providers: [
+    Logger
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+    constructor(private logger:Logger) {
+        this.logger.level = Level.LOG
+    }
+}

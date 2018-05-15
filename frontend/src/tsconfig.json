@@ -12,9 +12,9 @@
       "node_modules/@types",
       "../node_modules/moment"
     ],
-    "lib": [
+  "lib": [
       "es2016",
       "dom"
-    ]
+  ]
   }
 }
