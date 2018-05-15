@@ -10,7 +10,7 @@ src/environments/*
 !environment.ts
 !environment.prod.ts
 .python-version
-
+.node-version
 # dependencies
 /node_modules
 */node_modules
@@ -51,6 +51,7 @@ Thumbs.db
 .serverless
 backend/.serverless
 backend/bin/*
+frontend/tools/.*
 
 admin/vender/*
 !.gitkeep

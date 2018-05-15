@@ -1,0 +1,9 @@
+functions:
+  listProject:
+    handler: bin/project
+    events:
+      - http:
+          path: /project
+          method: get
+          cors: true
+
