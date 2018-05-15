@@ -1,11 +1,44 @@
 <!-- vim: set ts=4 sw=4 sts=4 et sta ai fenc=utf-8: -->
-
 <p>
   project-list works!
 </p>
-<ul class="list-data" *ngFor="let project of projects; let i = index">
-    <li class="list-item">
-        <span class="">{{project.ProjectNo}}</span>
-    </li>
-</ul>
+
+<div class="row">
+    <div class="col-xs-12">
+    <div class="box">
+
+        <div class="box-header">
+            <h3 class="box-title">Responsive Hover Table</h3>
+            <div class="box-tools">
+            <div class="input-group" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
+                <div class="input-group-btn">
+                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+            </div>o
+        </div><!-- /.box-header -->
+
+        <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Reason</th>
+            </tr>
+            <tr *ngFor="let project of projects; let i = index">
+                <td>{{project.id}}</td>
+                <td>{{project.client_name}}</td>
+                <td>{{project.subject}}</td>
+                <td>11-7-2014</td>
+                <td><span class="label label-success">Approved</span></td>
+                <td></td>
+            </tr>
+        </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+    </div>
+</div>
 

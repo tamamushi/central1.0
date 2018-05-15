@@ -1,16 +1,20 @@
 # vim:set ts=4 fenc=utf-8:
-#
 
 REPO = /etc/yum.repos.d/epel-apache-maven.repo
 SUGET = sudo wget
 SUYUM = sudo yum
+TOOLS = ./tools
 
-SWAGGERDIR = ./tools/swagger-codegen
-SWCODEGEN  = $(SWAGGERDIR)/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar
 APACHEMVN  = /usr/bin/mvn
 OPENJDKDIR = /usr/lib/jvm/jre-1.8.0-openjdk.x86_64
 OPENJDK    = java-1.8.0-openjdk
+OPENJDKDIR = /usr/lib/jvm/java-1.8.0-openjdk.x86_64/jre
 JAVA_HOME  = /usr/share/java/default
+
+SWAGGERDIR = $(TOOLS)/.swagger-codegen
+SWCODEGEN  = $(SWAGGERDIR)/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar
+MOCKSERVDIR = $(TOOLS)/.mock-server/nodejs
+MOCKSERVER = $(MOCKSERVDIR)/index.js
 
 ifdef eth
 	INET = $(shell $ ip -f inet -o addr show ${eth} |cut -d\  -f 7 | cut -d/ -f 1)
@@ -18,33 +22,41 @@ else
 	INET = $(shell $ ip -f inet -o addr show eth1 |cut -d\  -f 7 | cut -d/ -f 1)
 endif
 
+ifdef env
+	ENV = ${env}
+else
+	ENV = dev
+endif
+
 init: init-env init-app
 
-init-app:
+init-app: 
 	cd src/ && npm install
+
+angular2-logger-adjust:
+	## angular ver5 以上でangular2-loggerを使う際、app/core内のtsファイルを削除
+	## しないと、コンパイルが通らない問題に対する応急処置のタスク
+	@if [ $(shell cd src/ &&  \
+		../node_modules/\@angular/cli/bin/ng --version | \
+		grep 'Angular:' | \
+		awk '{print substr($$0, index($$0, " "), 2)}' | tr -d ' ') -ge 5 ]; then \
+		rm -rf src/node_modules/angular2-logger/app/core/*.ts; \
+	fi
 
 init-env:
 	npm install
 
 local:
-	cd src && ../../node_modules/@angular/cli/bin/ng serve --host $(INET)
+	cd src && ../../node_modules/@angular/cli/bin/ng serve --host $(INET) -e ${ENV}
 
-$(APACHEMVN):
-	echo "$(APACHEMVN) checked..."
-	@if $(SUYUM) list installed | grep apache-maven > /dev/null; then echo :; else \
-		$(SUGET) http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O $(REPO); \
-		$(SUGET) -i s/\$releasever/6/g $(REPO); \
-		$(SUYUM) install -y apache-maven; \
+$(OPENJDKDIR):
+	@echo "$(OPENJDK) checked..."
+	@if $(SUYUM) list installed | grep "$(OPENJDK)-devel" > /dev/null; then :; else \
+		$(SUYUM) install -y $(OPENJDK)-devel; \
 	fi
-
-OPENJDK:
-	echo "$(OPENJDK) checked..."
 	@if $(SUYUM) list installed | grep "$(OPENJDK)" > /dev/null; then :; else \
-		$(SUYUM) install -y $(OPENJDK) $(OPENJDK)-devel; \
+		$(SUYUM) install -y $(OPENJDK); \
 	fi
-
-MAKE_APACHEMVN_ENV:
-	echo "Building apache maven environment...."
 	@if [ ! -d $(JAVA_HOME) ]; then sudo ln -s $(OPENJDKDIR) $(JAVA_HOME); fi
 	@if cat ~/.bash_profile | grep 'JAVA_HOME=$(JAVA_HOME)' > /dev/null; \
 	then :; else echo 'export JAVA_HOME=$(JAVA_HOME)' >> ~/.bash_profile; fi
@@ -52,13 +64,26 @@ MAKE_APACHEMVN_ENV:
 	then :; else echo 'export PATH=$$PATH:/opt/apache-maven/bin' >> ~/.bash_profile; fi
 	@source ~/.bash_profile
 
-$(SWCODEGEN): OPENJDK MAKE_APACHEMVN_ENV $(APACHEMVN)
-	if [ ! -d $(SWAGGERDIR) ]; then git clone https://github.com/swagger-api/swagger-codegen $(SWAGGERDIR); fi
-	cd $(SWAGGERDIR) && mvn clean package
+$(APACHEMVN): $(OPENJDKDIR)
+	@echo "$(APACHEMVN) checked..."
+	@if $(SUYUM) list installed | grep apache-maven > /dev/null; then :; else \
+		$(SUGET) http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O $(REPO); \
+		$(SUGET) -i s/\$releasever/6/g $(REPO); \
+		$(SUYUM) install -y apache-maven; \
+	fi
+
+$(SWCODEGEN): $(APACHEMVN)
+	@if [ ! -d $(SWAGGERDIR) ]; then git clone https://github.com/swagger-api/swagger-codegen $(SWAGGERDIR); fi
+	@cd $(SWAGGERDIR) && mvn clean package
 
 install-swagger-codegen: $(SWCODEGEN)
 
-swagger:
-	cd $(SWAGGERDIR); \
-	java -jar modules/swagger-codegen-cli/target/swagger-cli.jar generate -i hoge.yml \
-	-l nodejs-server -o ../.mock-server/nodejs/
+$(MOCKSERVER): $(SWCODEGEN) ../backend/sample-api.yml
+	@echo "Generate lcaol mock nodejs server...."
+	java -jar $(SWCODEGEN) generate -i ../backend/sample-api.yml -l nodejs-server -o $(MOCKSERVDIR)
+	@cd $(MOCKSERVDIR); sed -i -e '/dependencies/a \    "cors": "^2.8.4",' package.json; npm install; \
+	sed -i -e "/require('connect')/a var cors = require('cors');" index.js; \
+	sed -i -e "/swaggerTools.initializeMiddleware/a app.use(cors());" index.js;
+	
+install-mock: $(MOCKSERVER)
+
