@@ -1,5 +1,4 @@
 # vim:set ts=4 fenc=utf-8:
-#
 
 REPO = /etc/yum.repos.d/epel-apache-maven.repo
 SUGET = sudo wget
@@ -27,12 +26,29 @@ init: init-env init-app
 
 init-app:
 	cd src/ && npm install
+	cd src/ && ../node_modules/\@angular/cli/bin/ng --version | grep 'Angular:' | \
+	awk '{print substr($$0, index($$0, " "), length($$0))}' | tr -d ' '
 
 init-env:
 	npm install
 
 local:
 	cd src && ../../node_modules/@angular/cli/bin/ng serve --host $(INET)
+
+$(OPENJDKDIR):
+	@echo "$(OPENJDK) checked..."
+	@if $(SUYUM) list installed | grep "$(OPENJDK)-devel" > /dev/null; then :; else \
+		$(SUYUM) install -y $(OPENJDK)-devel; \
+	fi
+	@if $(SUYUM) list installed | grep "$(OPENJDK)" > /dev/null; then :; else \
+		$(SUYUM) install -y $(OPENJDK); \
+	fi
+	@if [ ! -d $(JAVA_HOME) ]; then sudo ln -s $(OPENJDKDIR) $(JAVA_HOME); fi
+	@if cat ~/.bash_profile | grep 'JAVA_HOME=$(JAVA_HOME)' > /dev/null; \
+	then :; else echo 'export JAVA_HOME=$(JAVA_HOME)' >> ~/.bash_profile; fi
+	@if cat ~/.bash_profile | grep '/opt/apache-maven/bin' > /dev/null; \
+	then :; else echo 'export PATH=$$PATH:/opt/apache-maven/bin' >> ~/.bash_profile; fi
+	@source ~/.bash_profile
 
 $(APACHEMVN): $(OPENJDKDIR)
 	@echo "$(APACHEMVN) checked..."
@@ -41,18 +57,6 @@ $(APACHEMVN): $(OPENJDKDIR)
 		$(SUGET) -i s/\$releasever/6/g $(REPO); \
 		$(SUYUM) install -y apache-maven; \
 	fi
-
-$(OPENJDKDIR):
-	@echo "$(OPENJDK) checked..."
-	@if $(SUYUM) list installed | grep "$(OPENJDK)" > /dev/null; then :; else \
-		$(SUYUM) install -y $(OPENJDK) $(OPENJDK)-devel; \
-	fi
-	@if [ ! -d $(JAVA_HOME) ]; then sudo ln -s $(OPENJDKDIR) $(JAVA_HOME); fi
-	@if cat ~/.bash_profile | grep 'JAVA_HOME=$(JAVA_HOME)' > /dev/null; \
-	then :; else echo 'export JAVA_HOME=$(JAVA_HOME)' >> ~/.bash_profile; fi
-	@if cat ~/.bash_profile | grep '/opt/apache-maven/bin' > /dev/null; \
-	then :; else echo 'export PATH=$$PATH:/opt/apache-maven/bin' >> ~/.bash_profile; fi
-	@source ~/.bash_profile
 
 $(SWCODEGEN): $(APACHEMVN)
 	@if [ ! -d $(SWAGGERDIR) ]; then git clone https://github.com/swagger-api/swagger-codegen $(SWAGGERDIR); fi
