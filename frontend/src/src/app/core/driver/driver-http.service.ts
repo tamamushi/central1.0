@@ -36,7 +36,7 @@ export class DriverHttpService implements DriverInterface {
                 .then(
                     res => { // Success
                         console.log(res);
-                        resolve();
+                        resolve(res);
                     },
                     msg => { // Error
                     reject(msg);

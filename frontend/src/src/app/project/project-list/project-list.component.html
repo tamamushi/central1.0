@@ -5,7 +5,9 @@
 </p>
 <ul class="list-data" *ngFor="let project of projects; let i = index">
     <li class="list-item">
-        <span class="">{{project.ProjectNo}}</span>
+        <span class="">{{project.id}}</span>
+        <span class="">{{project.client_name}}</span>
+        <span class="">{{project.subject}}</span>
     </li>
 </ul>
 

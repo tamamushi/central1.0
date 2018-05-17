@@ -22,9 +22,8 @@ export class ProjectDAO implements DAOInterface {
     constructor() { }
     setDriver(_driver: DriverInterface) { this._accesor = _driver; }
 
-    fetchAll() {
-//        const res = `[{ "ProjectNo": "1" },{ "ProjectNo": "2" }]`;
-//        return JSON.parse(res) as Project[];
-        return this._accesor.find('Project') as Project[];
+    fetchAll(): Project[] {
+        return this._accesor.find('Project')
+                .then( res => { return Promise.resolve(res as Project[]); });
     }
 }

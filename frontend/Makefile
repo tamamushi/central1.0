@@ -26,8 +26,15 @@ init: init-env init-app
 
 init-app:
 	cd src/ && npm install
-	cd src/ && ../node_modules/\@angular/cli/bin/ng --version | grep 'Angular:' | \
-	awk '{print substr($$0, index($$0, " "), length($$0))}' | tr -d ' '
+
+init-test:
+	ANGULAR_VERSION=$(shell cd src/ &&  \
+		../node_modules/\@angular/cli/bin/ng --version | \
+		grep 'Angular:' | \
+		awk '{print substr($$0, index($$0, " "), 2)}' | tr -d ' '); \
+	ifeq ($(ANGULAR_VERSION), 5)
+		@echo "angular"
+	endif
 
 init-env:
 	npm install

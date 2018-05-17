@@ -25,7 +25,7 @@ export class ProjectService {
         this._dao = this._factory.create('Project'); 
     }
 
-    fetchProjects(): Project[] {
+    fetchProjects() {
         return this._dao.fetchAll();
     }
 }

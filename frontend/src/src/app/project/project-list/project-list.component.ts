@@ -28,6 +28,7 @@ export class ProjectListComponent implements OnInit {
 
     // 画面描画時にデータ一覧を取得
     ngOnInit() {
-        this.projects = this._service.fetchProjects();
+        this._service.fetchProjects()
+            .then(r => { this.projects = r; });
     }
 }
