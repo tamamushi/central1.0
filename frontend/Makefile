@@ -24,17 +24,18 @@ endif
 
 init: init-env init-app
 
-init-app:
+init-app: 
 	cd src/ && npm install
 
-init-test:
-	ANGULAR_VERSION=$(shell cd src/ &&  \
+angular2-logger-adjust:
+	## angular ver5 以上でangular2-loggerを使う際、app/core内のtsファイルを削除
+	## しないと、コンパイルが通らない問題に対する応急処置のタスク
+	@if [ $(shell cd src/ &&  \
 		../node_modules/\@angular/cli/bin/ng --version | \
 		grep 'Angular:' | \
-		awk '{print substr($$0, index($$0, " "), 2)}' | tr -d ' '); \
-	ifeq ($(ANGULAR_VERSION), 5)
-		@echo "angular"
-	endif
+		awk '{print substr($$0, index($$0, " "), 2)}' | tr -d ' ') -ge 5 ]; then \
+		rm -rf src/node_modules/angular2-logger/app/core/*.ts; \
+	fi
 
 init-env:
 	npm install
