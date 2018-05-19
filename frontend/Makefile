@@ -72,7 +72,7 @@ $(SWCODEGEN): $(APACHEMVN)
 
 install-swagger-codegen: $(SWCODEGEN)
 
-$(MOCKSERVER): $(SWCODEGEN)
+$(MOCKSERVER): $(SWCODEGEN) ../backend/sample-api.yml
 	@echo "Generate lcaol mock nodejs server...."
 	java -jar $(SWCODEGEN) generate -i ../backend/sample-api.yml -l nodejs-server -o $(MOCKSERVDIR)
 	@cd $(MOCKSERVDIR); sed -i -e '/dependencies/a \    "cors": "^2.8.4",' package.json; npm install; \

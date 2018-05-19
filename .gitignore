@@ -10,7 +10,8 @@ src/environments/*
 !environment.ts
 !environment.prod.ts
 .python-version
-.node-version
+*.node-version
+*.swp
 # dependencies
 /node_modules
 */node_modules
