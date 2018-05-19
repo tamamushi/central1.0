@@ -6,6 +6,6 @@
 
 export const environment = {
 	production:     false,
-    api_endpoint:   'http://192.168.1.5:8080'
+    api_endpoint:   'http://192.168.33.10:8080'
 };
 

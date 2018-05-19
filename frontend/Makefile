@@ -22,6 +22,12 @@ else
 	INET = $(shell $ ip -f inet -o addr show eth1 |cut -d\  -f 7 | cut -d/ -f 1)
 endif
 
+ifdef env
+	ENV = ${env}
+else
+	ENV = dev
+endif
+
 init: init-env init-app
 
 init-app: 
@@ -41,7 +47,7 @@ init-env:
 	npm install
 
 local:
-	cd src && ../../node_modules/@angular/cli/bin/ng serve --host $(INET)
+	cd src && ../../node_modules/@angular/cli/bin/ng serve --host $(INET) -e ${ENV}
 
 $(OPENJDKDIR):
 	@echo "$(OPENJDK) checked..."

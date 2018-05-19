@@ -5,13 +5,13 @@
 /tmp
 src/assets/font/*
 !.gitkeep
-src/environments/environment.local.ts
-src/environments/*
+*environment.local.ts
 !environment.ts
 !environment.prod.ts
 .python-version
 *.node-version
 *.swp
+
 # dependencies
 /node_modules
 */node_modules
