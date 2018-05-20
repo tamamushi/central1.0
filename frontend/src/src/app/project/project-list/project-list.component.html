@@ -1,14 +1,10 @@
 <!-- vim: set ts=4 sw=4 sts=4 et sta ai fenc=utf-8: -->
-<p>
-  project-list works!
-</p>
-
 <div class="row">
     <div class="col-xs-12">
-    <div class="box">
+    <div class="box with-border">
 
         <div class="box-header">
-            <h3 class="box-title">Responsive Hover Table</h3>
+            一覧
             <div class="box-tools">
             <div class="input-group" style="width: 150px;">
                 <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
@@ -16,7 +12,7 @@
                     <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                 </div>
             </div>
-            </div>o
+            </div>
         </div><!-- /.box-header -->
 
         <div class="box-body table-responsive no-padding">
@@ -27,6 +23,7 @@
                 <th>Date</th>
                 <th>Status</th>
                 <th>Reason</th>
+                <th></th>
             </tr>
             <tr *ngFor="let project of projects; let i = index">
                 <td>{{project.id}}</td>
@@ -34,7 +31,7 @@
                 <td>{{project.subject}}</td>
                 <td>11-7-2014</td>
                 <td><span class="label label-success">Approved</span></td>
-                <td></td>
+                <td><a [routerLink]="['detail', project.id]">編集</a></td>
             </tr>
         </table>
         </div><!-- /.box-body -->

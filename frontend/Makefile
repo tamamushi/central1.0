@@ -45,6 +45,7 @@ angular2-logger-adjust:
 
 init-env:
 	npm install
+	cd src/ && npm link ../$(TOOLS)/ngdoc-style
 
 local:
 	cd src && ../../node_modules/@angular/cli/bin/ng serve --host $(INET) -e ${ENV}

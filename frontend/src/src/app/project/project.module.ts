@@ -14,8 +14,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ProjectComponent } from './project.component';
-import { ProjectListComponent } from './project-list/project-list.component'
-import { ProjectCreateComponent } from './project-create/project-create.component'
+import { ProjectListComponent } from './project-list/project-list.component';
+import { ProjectCreateComponent } from './project-create/project-create.component';
+import { ProjectDetailComponent } from './project-detail/project-detail.component'
 
 const projectModuleRoutes: Routes = [
     {
@@ -23,7 +24,8 @@ const projectModuleRoutes: Routes = [
         component: ProjectComponent,
         children: [
             { path: '', component: ProjectListComponent },
-            { path: 'create', component: ProjectCreateComponent }
+            { path: 'create', component: ProjectCreateComponent },
+            { path: 'detail/:id', component: ProjectDetailComponent }
         ]
     }
 ];
@@ -39,7 +41,8 @@ const projectModuleRoutes: Routes = [
   declarations: [
     ProjectComponent,
     ProjectListComponent,
-    ProjectCreateComponent
+    ProjectCreateComponent,
+    ProjectDetailComponent
   ]
 })
 export class ProjectModule { }
