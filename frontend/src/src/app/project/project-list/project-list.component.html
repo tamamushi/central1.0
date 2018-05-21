@@ -1,5 +1,4 @@
 <!-- vim: set ts=4 sw=4 sts=4 et sta ai fenc=utf-8: -->
-<<<<<<< HEAD
 <div class="row">
     <div class="col-xs-12">
     <div class="box with-border">
@@ -13,19 +12,20 @@
                     <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                 </div>
             </div>
-            </div>o
+            </div>
         </div><!-- /.box-header -->
 
         <div class="box-body table-responsive no-padding">
+        <!-- <table class="table table-hover table-condensed"> -->
         <table class="table table-hover">
-            <tr>
+            <thead class="thead-dark"><tr>
                 <th>ID</th>
                 <th>User</th>
                 <th>Date</th>
                 <th>Status</th>
                 <th>Reason</th>
                 <th></th>
-            </tr>
+            </tr></thead>
             <tr *ngFor="let project of projects; let i = index">
                 <td>{{project.id}}</td>
                 <td>{{project.client_name}}</td>

@@ -14,5 +14,6 @@ export interface DAOInterface {
 
     setDriver(_driver: DriverInterface);
     fetchAll();
+    findById(id: number);
 }
 

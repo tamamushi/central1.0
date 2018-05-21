@@ -28,4 +28,9 @@ export class ProjectService {
     fetchProjects() {
         return this._dao.fetchAll();
     }
+
+    findProjectById(_id: number) {
+        return this._dao.findById(_id)
+                .then( r => { return Promise.resolve(r) });
+    }
 }

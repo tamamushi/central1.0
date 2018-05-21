@@ -20,10 +20,19 @@ export class ProjectDAO implements DAOInterface {
     private _accesor: DriverInterface;
 
     constructor() { }
-    setDriver(_driver: DriverInterface) { this._accesor = _driver; }
+    setDriver(_driver: DriverInterface)
+    {
+        _driver.setDataSource('Project');
+        this._accesor = _driver; 
+    }
 
     fetchAll(): Project[] {
-        return this._accesor.find('Project')
+        return this._accesor.find()
                 .then( res => { return Promise.resolve(res as Project[]); });
+    }
+
+    findById(_id: number): Project {
+        return this._accesor.findById(_id)
+                .then( res => { return Promise.resolve(res as Project); });
     }
 }

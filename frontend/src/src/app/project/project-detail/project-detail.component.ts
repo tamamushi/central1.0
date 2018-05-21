@@ -12,6 +12,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { ProjectService } from '../../core/biz/project.service';
+import { Project } from '../../core/model/project';
+
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
@@ -19,13 +22,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProjectDetailComponent implements OnInit {
 
-  constructor(
-    private route: ActivatedRoute
-  ) { }
+    public project: Project;
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
-  }
+    constructor(
+    private _route: ActivatedRoute,
+    private _service: ProjectService
+    ) { }
 
+    ngOnInit() {
+        var id = this._route.snapshot.paramMap.get('id');
+        this._service.findProjectById(Number(id))
+            .then(r => { this.project = r; });
+    }
 }

@@ -1,0 +1,15 @@
+
+.small-padding .col-xs-2 { padding: 0 10px; }
+.small-padding .col-xs-3 { padding: 0 10px; }
+.small-padding .col-xs-4 { padding: 0 10px; }
+.small-padding .col-xs-5 { padding: 0 10px; }
+.small-padding .col-xs-6 { padding: 0 10px; }
+
+.flex-outer {
+	display:		flex;
+	flex-wrap:		wrap;
+	justify-content:	space-between;
+}
+.flex-item {
+}
+

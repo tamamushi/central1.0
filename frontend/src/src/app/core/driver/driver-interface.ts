@@ -9,5 +9,7 @@
 **/
 
 export interface DriverInterface {
-    find(name: string);
+    find();
+    findById(id: number);
+    setDataSource(dataSourceName: string)
 }

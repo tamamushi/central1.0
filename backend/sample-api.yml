@@ -39,7 +39,7 @@ paths:
                 delivery_method: CD-ROMで納品
                 payment_term: 毎月末日締め、翌月末日に銀行振込での現金払い
   
-  '/projects/{projectId}':
+  '/project/{projectId}':
     get:
       summary: IDを指定してProjectを取得
       description: Projectオブジェクトを返す

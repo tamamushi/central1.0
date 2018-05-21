@@ -23,15 +23,28 @@ const httpOptions = {
 @Injectable()
 export class DriverHttpService implements DriverInterface {
 
-    private results;
-    constructor( private _http:HttpClient) { }
+    private _endpoint: string;
+    private _dataSource: string;
 
-    find(name: string) {
-        var endpoint    = environment.api_endpoint + '/' + name.toLowerCase() + 's';
-        console.log(endpoint);
+    constructor(
+        private _http:HttpClient,
+    ) { }
 
+    setDataSource(_dataSource: string) 
+    { 
+        this._endpoint = environment.api_endpoint + '/';
+        this._dataSource = _dataSource.toLowerCase();
+    }
+
+    getTargetEndpointString(_addString: string): string 
+    { 
+        return this._endpoint + this._dataSource + _addString; 
+    }
+
+    private _get(__endpoint)
+    {
         let promise = new Promise((resolve, reject) => {
-            this._http.get(endpoint)
+            this._http.get(__endpoint)
                 .toPromise()
                 .then(
                     res => { // Success
@@ -44,6 +57,18 @@ export class DriverHttpService implements DriverInterface {
                 );
             });
         return promise;            
-    // return `[{ "ProjectNo": "1" },{ "ProjectNo": "2" }]`
+    }
+
+    find() {
+        var endpoint    = this.getTargetEndpointString('s');
+        console.log(endpoint);
+        return this._get(endpoint);
+    }
+
+    findById(_id: number)
+    {
+        var endpoint    = this.getTargetEndpointString('/' + _id);
+        console.log(endpoint);
+        return this._get(endpoint);
     }
 }
