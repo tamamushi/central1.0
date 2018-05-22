@@ -1,15 +1,19 @@
 
-.small-padding .col-xs-2 { padding: 0 10px; }
-.small-padding .col-xs-3 { padding: 0 10px; }
-.small-padding .col-xs-4 { padding: 0 10px; }
-.small-padding .col-xs-5 { padding: 0 10px; }
-.small-padding .col-xs-6 { padding: 0 10px; }
+.small-padding .col-xs-1 { padding: 3px 10px; }
+.small-padding .col-xs-2 { padding: 3px 10px; }
+.small-padding .col-xs-3 { padding: 3px 10px; }
+.small-padding .col-xs-4 { padding: 3px 10px; }
+.small-padding .col-xs-5 { padding: 3px 10px; }
+.small-padding .col-xs-6 { padding: 3px 10px; }
+.small-padding .col-xs-7 { padding: 3px 10px; }
+.small-padding .col-xs-8 { padding: 3px 10px; }
+.small-padding .col-xs-9 { padding: 3px 10px; }
+.small-padding .col-xs-10 { padding: 3px 10px; }
+.small-padding .col-xs-11 { padding: 3px 10px; }
+.small-padding .col-xs-12 { padding: 3px 10px; }
 
-.flex-outer {
-	display:		flex;
-	flex-wrap:		wrap;
-	justify-content:	space-between;
-}
-.flex-item {
-}
+.pull-right.pull-bottom { margin-top: 3px; }
 
+.row.valign-middle div:nth-child(2n+1) {
+	font-weight:	bold
+}
