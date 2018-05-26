@@ -50,14 +50,14 @@ init-env:
 	cd src/ && npm link ../$(TOOLS)/ngdoc-style
 
 api-server:
-	@if [ -f /tmp/.mockserver.pid ];then \
-		kill $(shell cat /tmp/.mockserver.pid); \
-	fi
-	@if [ -f /tmp/.tape.pid ]; then \
-		kill $(shell cat /tmp/.tape.pid); \
-	fi
+	@if [ -f /tmp/.mockserver.pid ];then kill $(shell cat /tmp/.mockserver.pid); fi
+	@if [ -f /tmp/.tape.pid ]; then kill $(shell cat /tmp/.tape.pid); fi
 	@node $(MOCKSERVER)	& echo "$$!" > /tmp/.mockserver.pid
 	@$(TAPE) -c ../backend/taperc & echo "$$!" > /tmp/.tape.pid
+
+stop-api-server:
+	@if [ -f /tmp/.mockserver.pid ];then kill $(shell cat /tmp/.mockserver.pid); fi
+	@if [ -f /tmp/.tape.pid ]; then kill $(shell cat /tmp/.tape.pid); fi
 
 local: 
 	cd src && ../../node_modules/@angular/cli/bin/ng serve --host $(INET) -e ${ENV}

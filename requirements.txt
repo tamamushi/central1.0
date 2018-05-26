@@ -16,6 +16,6 @@ PyYAML==3.12
 rsa==3.4.2
 s3transfer==0.1.13
 six==1.11.0
-tape==1.0
+git+https://github.com/metajack/tape#egg=tape
 Twisted==18.4.0
 zope.interface==4.5.0
