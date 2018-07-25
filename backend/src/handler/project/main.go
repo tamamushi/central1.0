@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/events"
 	model "../../model"
-	router "../../lib/router"
+	lib "../../lib"
 )
 
 var (
@@ -42,9 +42,9 @@ func errorResponse(err error) (events.APIGatewayProxyResponse, error) {
 	return events.APIGatewayProxyResponse{StatusCode: 500, Body: "Internal Server Error"}, nil
 }
 
-func _createRoutes(route *Router) *Router {
+func _createRoutes(route *lib.Router) *lib.Router {
 
-//	route.Add('GET', get)
+	route.Add("GET", "get")
 //	route.Add('POST', create)
 //	route.Add('UPDATE', update)
 
@@ -53,7 +53,7 @@ func _createRoutes(route *Router) *Router {
 
 func main() {
 	
-	route := &Router{}
+	route := &lib.Router{}
 	_createRoutes(route)
 	
 	lambda.Start(route.Handler)

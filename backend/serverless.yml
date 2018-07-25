@@ -11,6 +11,10 @@ package:
   include:
     - ./bin/**
 
+plugins:
+  - serverless-offline
+  - serverless-static
+
 functions:
   listProject:
     handler: bin/project
@@ -32,7 +36,7 @@ functions:
     handler: bin/invoice
     events:
       - http:
-          path: /project
+          path: /invoice
           method: get
           cors: true
 
@@ -43,3 +47,8 @@ functions:
           path: /invoice/{id}
           method: get
           cors: true
+
+custom:
+  static:
+    path: ./public
+    port: 8000

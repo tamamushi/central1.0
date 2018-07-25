@@ -9,7 +9,8 @@
   "devDependencies": {
     "@angular/cli": "^1.7.4",
     "serverless": "^1.27.3",
-    "serverless-offline": "git+https://github.com/tamamushi/serverless-offline-golang.git"
+    "serverless-offline": "git+https://github.com/tamamushi/serverless-offline-golang.git",
+    "serverless-static": "^1.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

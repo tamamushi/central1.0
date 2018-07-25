@@ -4,13 +4,25 @@
 
 package router
 
-func Add(mt String, func interface{}) {
+import (
+	"fmt"
+	"github.com/aws/aws-lambda-go/events"
+)
+
+type Router struct {}
+
+type 
+func (p *Router) GET(f *interface{}) {
 	
-	func.echo()
-	fmt.Println(mt)
+	
 }
 
-func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func (p *Router) POST(f *interface{} {
+}
+
+func (p *Router) Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
+	fmt.Println("%v", request)
 	
 	return events.APIGatewayProxyResponse {Body:request.Body, StatusCode:200}, nil
 }
