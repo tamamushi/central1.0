@@ -44,11 +44,20 @@ func errorResponse(err error) (events.APIGatewayProxyResponse, error) {
 
 func _createRoutes(route *lib.Router) *lib.Router {
 
-	route.Add("GET", "get")
+	route.Get(getProjects)
+	route.GetWithPathParam(getProject)
 //	route.Add('POST', create)
 //	route.Add('UPDATE', update)
 
 	return route
+}
+
+func getProjects(){
+
+}
+
+func getProject(){
+	fmt.Println("getProject")
 }
 
 func main() {

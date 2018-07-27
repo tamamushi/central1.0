@@ -6,25 +6,42 @@ package router
 
 import (
 	"fmt"
+	"context"
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/kr/pretty"
 )
 
-type Router struct {}
+type Router struct {
+	f map[string] func()
+}
 
-type 
-func (p *Router) GET(f *interface{}) {
-	
+func (p *Router) Get(f interface{}) {
+	p.f["GET"] = f.(map[string] func())
+}
+
+func (p *Router) GetWithPathParam(f interface{}) {
 	
 }
 
-func (p *Router) POST(f *interface{} {
+func (p *Router) Post(f interface{}) {
 }
 
-func (p *Router) Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func (p *Router) Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	fmt.Println("%v", request)
+	switch req.HTTPMethod {
+		case "GET":
+			if len(req.PathParameters) > 0 {
+				fmt.Println("Request HTTP Method: GET with PathParam")
+			} else {
+				p.f["GET"]()
+				fmt.Println("Request HTTP Method: GET")
+			}
+		case "POST": 
+			fmt.Println("Request HTTP Method: POST")
+	}
+	fmt.Printf("req : %# v", pretty.Formatter(req))
 	
-	return events.APIGatewayProxyResponse {Body:request.Body, StatusCode:200}, nil
+	return events.APIGatewayProxyResponse {Body:req.Body, StatusCode:200}, nil
 }
 
 func errorResponse(err error) (events.APIGatewayProxyResponse, error) {

@@ -30,6 +30,7 @@ deps:
 	go get github.com/aws/aws-lambda-go/lambda
 	go get github.com/aws/aws-lambda-go/events
 	go get github.com/mattn/go-sqlite3
+	go get github.com/kr/pretty
 
 bin/%: src/handler/%
 	env GOOS=linux $(GOBUILD) $(LDFLAGS) -o $@ $</main.go
