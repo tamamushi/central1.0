@@ -53,12 +53,12 @@ func _createRoutes(route *lib.Router) *lib.Router {
 }
 
 func getProjects(){
-
 }
 
 func getProject(){
-	fmt.Println("getProject")
+
 }
+
 
 func main() {
 	

@@ -10,8 +10,24 @@ REVISION := $(shell git rev-parse --short HEAD)
 
 LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
 
-deploy: deps dep/project dep/invoice dep/payment
+SRC_DIR := ./src
+OBJ_DIR := ./build
+SOURCES := $(shell ls $(SRC_DIR)/*.go $(SRC_DIR)/*/*.go )
+OBJS    := $(subst $(SRC_DIR),$(OBJ_DIR), $(SOURCES:.go=.o))
+
+#deploy: deps dep/project dep/invoice dep/payment
 build: deps bin/project bin/invoice bin/payment
+
+bin/%: $(OBJS) src/handler/%
+	echo $(SOURCES)
+	echo $(OBJS)
+	env GOOS=linux $(GOBUILD) $(LDFLAGS) -o $@ $</main.go
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.go
+	@if [ ! -d $(OBJ_DIR) ]; \
+		then echo "mkdir -p $(BOJ_DIR)"; mkdir -p $(OBJ_DIR); \
+	fi
+	env GOOS=linux $(GOBUILD) $(LDFLAGS) -o $@ $<
 
 test-%: bin/%
 	sls offline 
@@ -31,8 +47,5 @@ deps:
 	go get github.com/aws/aws-lambda-go/events
 	go get github.com/mattn/go-sqlite3
 	go get github.com/kr/pretty
-
-bin/%: src/handler/%
-	env GOOS=linux $(GOBUILD) $(LDFLAGS) -o $@ $</main.go
 
 .PHONY: deps all

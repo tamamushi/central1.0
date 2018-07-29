@@ -11,12 +11,14 @@ import (
 	"github.com/kr/pretty"
 )
 
+
+
 type Router struct {
-	f map[string] func()
+	f func()
 }
 
-func (p *Router) Get(f interface{}) {
-	p.f["GET"] = f.(map[string] func())
+func (p *Router) Get(f func()) {
+	p.f = f()
 }
 
 func (p *Router) GetWithPathParam(f interface{}) {
@@ -33,7 +35,7 @@ func (p *Router) Handler(ctx context.Context, req events.APIGatewayProxyRequest)
 			if len(req.PathParameters) > 0 {
 				fmt.Println("Request HTTP Method: GET with PathParam")
 			} else {
-				p.f["GET"]()
+				p.f()
 				fmt.Println("Request HTTP Method: GET")
 			}
 		case "POST": 
