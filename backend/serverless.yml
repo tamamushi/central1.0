@@ -32,22 +32,6 @@ functions:
           method: get
           cors: true
 
-  listInvoice:
-    handler: bin/invoice
-    events:
-      - http:
-          path: /invoice
-          method: get
-          cors: true
-
-  getInvoice:
-    handler: bin/invoice
-    events:
-      - http:
-          path: /invoice/{id}
-          method: get
-          cors: true
-
 custom:
   static:
     path: ./public

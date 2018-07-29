@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/events"
 	model "../../model"
-	lib "../../lib"
+	router "../../lib/router"
 )
 
 var (
@@ -18,7 +18,7 @@ var (
     Revision string
 )
 
-func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func getProjects(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	
 	var projects	= map[string]*model.Project{}
 
@@ -37,33 +37,25 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	return events.APIGatewayProxyResponse {Body: string(b), StatusCode: 200}, nil
 }
 
+func getProjectById() (events.APIGatewayProxyResponse, error) {
+
+	b, _ := json.Marshal(&model.Project{ ID: "test" })
+
+	return events.APIGatewayProxyResponse {Body: string(b), StatusCode: 200}, nil
+}
+
+func main() {
+	
+	router	:= router.NewRouter()
+
+	router.Get(getProjects)
+	router.GetWithPathParam(getProjectById)
+	
+	lambda.Start(router.Handler)
+}
+
 func errorResponse(err error) (events.APIGatewayProxyResponse, error) {
 	fmt.Printf("%+v\n", err)
 	return events.APIGatewayProxyResponse{StatusCode: 500, Body: "Internal Server Error"}, nil
 }
 
-func _createRoutes(route *lib.Router) *lib.Router {
-
-	route.Get(getProjects)
-	route.GetWithPathParam(getProject)
-//	route.Add('POST', create)
-//	route.Add('UPDATE', update)
-
-	return route
-}
-
-func getProjects(){
-}
-
-func getProject(){
-
-}
-
-
-func main() {
-	
-	route := &lib.Router{}
-	_createRoutes(route)
-	
-	lambda.Start(route.Handler)
-}

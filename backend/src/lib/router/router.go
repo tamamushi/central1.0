@@ -7,13 +7,11 @@ package router
 import (
 	"fmt"
 	"context"
-	"strconv"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/kr/pretty"
 )
 
-//type Handlers func(r events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error)
-type Handlers func(r interface{}) (events.APIGatewayProxyResponse, error)
+type Handlers func(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error)
 
 type Router struct {
 	route	map[string]Handlers
@@ -44,18 +42,19 @@ func (p *Router) Handler(ctx context.Context, req events.APIGatewayProxyRequest)
 	switch req.HTTPMethod {
 		case "GET":
 			if len(req.PathParameters) > 0 {
-				res, err := p.route["GETWithPathParam"](); 
-				if err != nil { return errorResponse(err) }
+				key	= "GETWithPathParam"
 				fmt.Println("Request HTTP Method: GET with PathParam")
 			} else {
-				res, err := p.route["GET"](req); 
-				if err != nil { return errorResponse(err) }
+				key	= "GET"
 				fmt.Println("Request HTTP Method: GET")
 			}
 		case "POST": 
 			fmt.Println("Request HTTP Method: POST")
 	}
 	fmt.Printf("req : %# v", pretty.Formatter(req))
+
+	res, err := p.route[key](req); 
+	if err != nil { return errorResponse(err) }
 	return res, nil
 }
 

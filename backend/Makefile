@@ -18,10 +18,8 @@ OBJS    := $(subst $(SRC_DIR),$(OBJ_DIR), $(SOURCES:.go=.o))
 #deploy: deps dep/project dep/invoice dep/payment
 build: deps bin/project bin/invoice bin/payment
 
-bin/%: $(OBJS) src/handler/%
-	echo $(SOURCES)
-	echo $(OBJS)
-	env GOOS=linux $(GOBUILD) $(LDFLAGS) -o $@ $</main.go
+bin/%: src/handler/%
+	env GOOS=linux $(GOBUILD) $(LDFLAGS) -a -o $@ $</main.go
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.go
 	@if [ ! -d $(OBJ_DIR) ]; \
