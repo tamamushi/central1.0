@@ -2,7 +2,7 @@
  vim:set ts=4 fenc=utf-8:
 */
 
-package router
+package service
 
 import (
 	"fmt"

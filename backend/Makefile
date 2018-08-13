@@ -10,15 +10,15 @@ REVISION := $(shell git rev-parse --short HEAD)
 
 LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
 
+TARGET_DIR := bin/handler
 SRC_DIR := ./src
 OBJ_DIR := ./build
-SOURCES := $(shell ls $(SRC_DIR)/*.go $(SRC_DIR)/*/*.go )
-OBJS    := $(subst $(SRC_DIR),$(OBJ_DIR), $(SOURCES:.go=.o))
+DOMAINS := $(shell find $(SRC_DIR)/domain -type f -name "*.go")
 
 #deploy: deps dep/project dep/invoice dep/payment
 build: deps bin/project bin/invoice bin/payment
 
-bin/%: src/handler/%
+$(TARGET_DIR)/%: src/app/% $(DOMAINS)
 	env GOOS=linux $(GOBUILD) $(LDFLAGS) -a -o $@ $</main.go
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.go
@@ -27,10 +27,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.go
 	fi
 	env GOOS=linux $(GOBUILD) $(LDFLAGS) -o $@ $<
 
-test-%: bin/%
+test-%: $(TARGET_DIR)/%
 	sls offline 
 
-dep/%: bin/%
+dep/%: $(TARGET_DIR)/%
 	../node_modules/serverless/bin/serverless deploy function -f \
 	list$(shell echo $* | awk '{ print toupper(substr($$0, 1, 1)) substr($$0, 2, length($$0) - 1) }')
 	../node_modules/serverless/bin/serverless deploy function -f \

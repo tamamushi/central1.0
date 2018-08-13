@@ -17,7 +17,7 @@ plugins:
 
 functions:
   listProject:
-    handler: bin/project
+    handler: bin/handler/project
     events:
       - http:
           path: /project
@@ -25,7 +25,7 @@ functions:
           cors: true
 
   getProject:
-    handler: bin/project
+    handler: bin/handler/project
     events:
       - http:
           path: /project/{id}

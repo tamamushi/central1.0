@@ -9,8 +9,8 @@ import (
 	"encoding/json"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/events"
-	model "../../model"
-	router "../../lib/router"
+	m "../../domain/model"
+	service "../../domain/service"
 )
 
 var (
@@ -18,35 +18,42 @@ var (
     Revision string
 )
 
+var _factory *service.Factory
+
+func init() {
+
+	_factory = service.NewFactory()
+	_factory.Behave().SetFindLimit(10)
+}
+
+//func createProject(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+//}
+
 func getProjects(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	
-	var projects	= map[string]*model.Project{}
+	projects	:= []m.Project{}
 
-	p1 := &model.Project {
-			ID:		"1000011",
-			Title:	"XCOM様追加開発"}
-
-	p2 := &model.Project {
-			ID:		"1000012",
-			Title:	"XCOM様追加開発"}
-
-	projects[p1.ID] = p1
-	projects[p2.ID] = p2
+	m.Finds(&projects)
 
 	b, _ := json.Marshal(projects)
 	return events.APIGatewayProxyResponse {Body: string(b), StatusCode: 200}, nil
 }
 
-func getProjectById() (events.APIGatewayProxyResponse, error) {
+func getProjectById(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	b, _ := json.Marshal(&model.Project{ ID: "test" })
+	project		:= m.Project{}
+	project.ID	= "100012"
+
+	m.Find(&project)
+
+	b, _ := json.Marshal(project)
 
 	return events.APIGatewayProxyResponse {Body: string(b), StatusCode: 200}, nil
 }
 
 func main() {
 	
-	router	:= router.NewRouter()
+	router	:= service.NewRouter()
 
 	router.Get(getProjects)
 	router.GetWithPathParam(getProjectById)
