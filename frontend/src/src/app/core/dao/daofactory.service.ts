@@ -12,6 +12,8 @@ import { Injectable } from '@angular/core';
 import { DriverHttpService } from '../driver/driver-http.service';
 import { DAOInterface } from './dao-interface';
 import { ProjectDAO } from './project.dao';
+import { CustomerDAO } from './customer.dao';
+import { ChargeInvoiceDAO } from './charge-invoice.dao';
 
 @Injectable()
 export class DAOFactoryService {
@@ -22,8 +24,18 @@ export class DAOFactoryService {
 
     create(_dataSource: string) 
     {
-        this._dao   = new ProjectDAO();
+
+        switch(_dataSource) {
+        case "Project": this._dao = this.getProject(); break;
+        case "Customer": this._dao = this.getCustomer(); break;
+        case "ChargeInvoice": this._dao = this.getChargeInvoice(); break;
+        }
+
         this._dao.setDriver(this._driver);
         return this._dao;
     }
+
+    getProject() { return new ProjectDAO() }
+    getCustomer() { return new CustomerDAO() }
+    getChargeInvoice() { return new ChargeInvoiceDAO() }
 }

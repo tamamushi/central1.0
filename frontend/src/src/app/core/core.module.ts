@@ -19,17 +19,28 @@ import { DriverHttpService } from './driver/driver-http.service';
 import { ProjectDAO } from './dao/project.dao';
 import { ProjectService } from './biz/project.service';
 
+import { CustomerDAO } from './dao/customer.dao';
+import { CustomerService } from './biz/customer.service';
+
+import { ChargeInvoiceDAO } from './dao/charge-invoice.dao';
+import { ChargeInvoiceService } from './biz/charge-invoice.service';
+import { UniversalPagerComponent } from './component/universal-pager/universal-pager.component';
+
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule
   ],
-  declarations: [],
+  declarations: [UniversalPagerComponent],
   providers: [
     DAOFactoryService,
     DriverHttpService,
     ProjectDAO,
-    ProjectService
+    ProjectService,
+    CustomerDAO,
+    CustomerService,
+    ChargeInvoiceDAO,
+    ChargeInvoiceService
   ]
 })
 export class CoreModule { }

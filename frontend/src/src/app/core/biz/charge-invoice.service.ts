@@ -2,10 +2,10 @@
  *
  *  @ngdoc service
  *  @module
- *  @name ProjectService
+ *  @name ChargeInvoiceService
  *  @description
  *
- *  @file project.service.ts
+ *  @file charge-invoice.service.ts
  *
 **/
 
@@ -14,22 +14,22 @@ import { Logger } from 'angular2-logger/core';
 
 import { DAOInterface } from '../dao/dao-interface';
 import { DAOFactoryService } from '../dao/daofactory.service';
-import { Project } from '../model/project';
+import { ChargeInvoice } from '../model/charge-invoice';
 
 @Injectable()
-export class ProjectService {
+export class ChargeInvoiceService {
 
     private _dao:    DAOInterface;
 
     constructor(private _factory: DAOFactoryService) {
-        this._dao = this._factory.create('Project'); 
+        this._dao = this._factory.create('ChargeInvoice'); 
     }
 
-    fetchProjects() {
+    fetchChargeInvoices() {
         return this._dao.fetchAll();
     }
 
-    findProjectsById(_id: number) {
+    findChargeInvoicesById(_id: number) {
         return this._dao.findById(_id)
                 .then( r => { return Promise.resolve(r) });
     }

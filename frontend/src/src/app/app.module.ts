@@ -16,31 +16,29 @@ import { Logger, Level } from 'angular2-logger/core'
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LayoutModule } from './layout/layout.module';
 import { CoreModule } from './core/core.module';
-import { ProjectModule } from './project/project.module';
 
 import { TopComponent } from './top/top.component';
 
-//import { ChargeInvoiceModule } from './charge-invoice/charge-invoice.module';
-//import { ChargeInvoiceComponent } from './charge-invoice/charge-invoice.component';
-
+import { ProjectModule } from './project/project.module';
+import { CustomerModule } from './customer/customer.module';
+import { ChargeInvoiceModule } from './charge-invoice/charge-invoice.module';
 //import { PaymentInvoiceModule } from './payment-invoice/payment-invoice.module';
-//import { PaymentInvoiceComponent } from './payment-invoice/payment-invoice.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TopComponent
-//    ChargeInvoiceComponent,
-//    PaymentInvoiceComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
+    CoreModule,
     ProjectModule,
-    CoreModule
-//    ChargeInvoiceModule,
-//    PaymentInvoiceModule
+    CustomerModule,
+    ChargeInvoiceModule
+    //PaymentInvoiceModule
   ],
   providers: [
     Logger

@@ -67,7 +67,7 @@ export class DriverHttpService implements DriverInterface {
 
     findById(_id: number)
     {
-        var endpoint    = this.getTargetEndpointString('/' + _id);
+        var endpoint    = this.getTargetEndpointString('s/' + _id);
         console.log(endpoint);
         return this._get(endpoint);
     }

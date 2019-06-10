@@ -31,7 +31,7 @@ export class ProjectDetailComponent implements OnInit {
 
     ngOnInit() {
         var id = this._route.snapshot.paramMap.get('id');
-        this._service.findProjectById(Number(id))
+        this._service.findProjectsById(Number(id))
             .then(r => { this.project = r; });
     }
 }

@@ -1,0 +1,10 @@
+<!-- vim: set ts=4 sw=4 sts=4 et sta ai fenc=utf-8: -->
+<ul class="pagination">
+    <li><a href="javascript:;" (click)="prev()">&laquo;</a></li>
+        <li *ngFor="let page of displayPages" [ngClass]="{'active': page === currentPage}">
+            <a href="javascript:;" *ngIf="page !== currentPage" (click)="jump(page)">{{ page }}</a>
+            <span *ngIf="page === currentPage">{{ page }}</span>
+        </li> 
+    <li><a href="javascript:;" (click)="next()">&raquo;</a></li>
+</ul>
+
